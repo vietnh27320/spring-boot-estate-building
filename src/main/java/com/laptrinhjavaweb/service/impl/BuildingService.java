@@ -10,6 +10,7 @@ import com.laptrinhjavaweb.repository.UserRepository;
 import com.laptrinhjavaweb.service.IBuildingService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
@@ -33,8 +34,6 @@ public class BuildingService implements IBuildingService {
     @Autowired
     private BuildingConverter buildingConverter;
 
-    @Autowired
-    private UserRepository userRepository;
 
     @Override
     public List<BuildingDTO> findAll() {
@@ -45,9 +44,9 @@ public class BuildingService implements IBuildingService {
 
     @Override
     public List<BuildingDTO> findByStaff(long staffId) {
-        /*List<BuildingEntity> buildingEntities = buildingRepository.findByStaff(staffId);
+        List<BuildingEntity> buildingEntities = buildingRepository.findByStaff(staffId);
         List<BuildingDTO> results = buildingEntities.stream().map(item ->  buildingConverter.convertToDto(item)).collect(Collectors.toList());
-        return results;*/
+        return results;
 
         /*JPQL <-> HQL*/
         /*UserEntity userEntity = userRepository.findById(staffId);
@@ -56,9 +55,9 @@ public class BuildingService implements IBuildingService {
         return results;*/
 
         /*spring data jpa*/
-        List<BuildingEntity> buildingEntities = buildingRepository.findByStaffs_Id(staffId);
-        List<BuildingDTO> results = buildingEntities.stream().map(item -> buildingConverter.convertToDto(item)).collect(Collectors.toList());
-        return results;
+//        List<BuildingEntity> buildingEntities = buildingRepository.findByStaffs_Id(staffId);
+//        List<BuildingDTO> results = buildingEntities.stream().map(item -> buildingConverter.convertToDto(item)).collect(Collectors.toList());
+//        return results;
     }
 
     @Override
@@ -73,6 +72,22 @@ public class BuildingService implements IBuildingService {
         }
         return results;
     }
+
+    @Override
+    public void delete(long staffid) {
+//        for (long item : ids) {
+//            rentAreaRepository.deleteByBuildingId(item);
+//            assignmentBuildingRepository.deleteByBuildingId(item);
+//            buildingRepository.delete(item);
+//        }
+        buildingRepository.deleteById(staffid);
+    }
+
+    @Override
+    public void create(BuildingEntity buildingEntity) {
+        buildingRepository.save(buildingEntity);
+    }
+
 
     private Map<String, Object> convertDataToMap(BuildingSearchBuilder builder) {
         Map<String, Object> results = new HashMap<>();
@@ -146,7 +161,6 @@ public class BuildingService implements IBuildingService {
             assignmentBuildingRepository.deleteByBuildingId(item);
             buildingRepository.delete(item);
         }
-
     }
 
     private Map<String, Object> convertDataToMap(BuildingSearchBuilder builder) {

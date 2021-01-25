@@ -10,8 +10,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-@Entity
-@Table(name = "user")
+@Entity(name= "user")
 public class UserEntity extends BaseEntity {
 
 	@Column(name = "username")

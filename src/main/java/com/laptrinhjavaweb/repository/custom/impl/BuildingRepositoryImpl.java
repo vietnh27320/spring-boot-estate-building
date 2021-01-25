@@ -2,6 +2,7 @@ package com.laptrinhjavaweb.repository.custom.impl;
 
 import com.laptrinhjavaweb.builder.BuildingSearchBuilder;
 import com.laptrinhjavaweb.entity.BuildingEntity;
+import com.laptrinhjavaweb.entity.UserEntity;
 import com.laptrinhjavaweb.repository.custom.BuildingRepositoryCustom;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Repository;

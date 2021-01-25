@@ -1,6 +1,7 @@
 package com.laptrinhjavaweb.api;
 
 import com.laptrinhjavaweb.builder.BuildingSearchBuilder;
+import com.laptrinhjavaweb.converter.BuildingConverter;
 import com.laptrinhjavaweb.dto.BuildingDTO;
 import com.laptrinhjavaweb.service.IBuildingService;
 import com.laptrinhjavaweb.service.impl.BuildingService;
@@ -12,18 +13,21 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/building")
+//@RequestMapping("/api/building")
 public class BuildingAPI {
 
     @Autowired
     private BuildingService buildingService;
 
-    @GetMapping
+    @Autowired
+    private BuildingConverter buildingConverter;
+
+    @GetMapping("/api/building")
     public List<BuildingDTO> findAll(@RequestParam Map<String, String> model) {
         BuildingSearchBuilder builder = new BuildingSearchBuilder.Builder()
-                .setName((String) getKeyFromModel(model,"name"))
-                .setWard((String) getKeyFromModel(model,"ward"))
-                .setStreet((String) getKeyFromModel(model,"street"))
+                .setName((String) getKeyFromModel(model, "name"))
+                .setWard((String) getKeyFromModel(model, "ward"))
+                .setStreet((String) getKeyFromModel(model, "street"))
                 .setFloorArea(StringUtils.isNotBlank(model.get("floorarea").toString()) ? Integer.parseInt(model.get("floorarea")) : null)
                 .setNumberOfBasement(StringUtils.isNotBlank(model.get("numberofbasement").toString()) ? Integer.parseInt(model.get("numberofbasement")) : null)
 //                .setStaffId(StringUtils.isNotBlank(model.get("staffid").toString()) ? Long.parseLong(model.get("staffid")) : null)
@@ -36,6 +40,11 @@ public class BuildingAPI {
             model.get(key);
         }
         return null;
+    }
+
+    @PostMapping("/api/add/building")
+    public void add(@RequestBody BuildingDTO buildingDTO) {
+        buildingService.create(buildingConverter.convertToEntity(buildingDTO));
     }
 
 //    @PostMapping

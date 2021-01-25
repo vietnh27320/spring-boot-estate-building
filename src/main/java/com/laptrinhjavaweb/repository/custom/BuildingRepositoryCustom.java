@@ -9,5 +9,7 @@ import java.util.Map;
 public interface BuildingRepositoryCustom {
     List<BuildingEntity> findByStaff(Long staffId);
     List<BuildingEntity> findAll(BuildingSearchBuilder buildingSearchBuilder, Map<String, Object> params);
+
+
 }
 
